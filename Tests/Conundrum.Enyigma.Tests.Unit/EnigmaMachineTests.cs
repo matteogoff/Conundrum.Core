@@ -4,11 +4,18 @@ using Conundrum.Model;
 using Conundrum.Crypto;
 using Conundrum.Enigma;
 using Xunit;
+using Newtonsoft.Json;
 
 namespace Conundrum.Enigma.Test.Unit
 {
     public class EnigmaMachineTests
     {
+
+
+
+
+
+
 
         [Fact]
         public void OneRotor_Encode_ShouldReturnExpectedOutput()
@@ -20,11 +27,10 @@ namespace Conundrum.Enigma.Test.Unit
             };
                                        // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
+            var plugboard = new PlugBoard(new Dictionary<char, char>
             {
-                {'A', 'B'},
-                {'B', 'A'}
-            };
+                {'A', 'B'}
+            });
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
 
             // Act
@@ -43,7 +49,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A", name:"I")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>();
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
 
             // Act
@@ -67,11 +73,10 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A", name:"III")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
+            var plugboard = new PlugBoard(new Dictionary<char, char>
             {
-                {'A', 'B'},
-                {'B', 'A'}
-            };
+                {'A', 'B'}
+            });
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
 
             // Act
@@ -92,7 +97,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A", name:"III")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>();
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
 
             // Act
@@ -111,11 +116,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A", name:"I")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
-            {
-                //{'A', 'B'},
-                //{'B', 'A'}
-            };
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
             var message = "HELLO";
 
@@ -137,11 +138,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A", name:"I")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
-            {
-                //{'A', 'B'},
-                //{'B', 'A'}
-            };
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
             var message = "HELLO";
 
@@ -162,11 +159,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A", name:"I")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
-            {
-                //{'A', 'B'},
-                //{'B', 'A'}
-            };
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
             var message = "HELLO";
 
@@ -189,11 +182,7 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A", name:"I")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
-            {
-                //{'A', 'B'},
-                //{'B', 'A'}
-            };
+            var plugboard = new PlugBoard();
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
             var message = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -217,11 +206,11 @@ namespace Conundrum.Enigma.Test.Unit
                 new Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A", name:"III")
             };
             var reflector = new Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
-            var plugboard = new Dictionary<char, char>
-            {
-                {'A', 'B'},
-                {'B', 'A'}
-            };
+            var plugboard = new PlugBoard(new Dictionary<char, char>
+                {
+                    {'A', 'B'}
+                }
+            );
             var enigmaMachine = new EnigmaMachine(rotors, reflector, plugboard);
             var message = "HELLO";
 
@@ -235,26 +224,20 @@ namespace Conundrum.Enigma.Test.Unit
         }
 
 
-        [Fact]
-        public void EnigmaMachine_GetSettings_ShouldReturnInitalState()
-        {
-            //Arrange
-            var settings = new EnigmaMachineSetting()
-            {
-                Name = "Test",
-                Rotors = new List<RotorSetting>
-                {
-                    new RotorSetting { Map = "EKMFLGDQVZNTOWYHXUSPAIBRCJ", StartingPosition = 'A', Notches = "D", Name = "I" },
-                    new RotorSetting { Map = "AJDKSIRUXBLHWTMCQGZNPYFVOE", StartingPosition = 'A', Notches = "K", Name = "II" },
-                    new RotorSetting { Map = "BDFHJLCPRTXVZNYEIWGAKMUSQO", StartingPosition = 'A', Name = "III" }
-                },
-                Reflector = new ReflectorSetting { Map = "YRUHQSLDPXNGOKMIEBFZCWVJAT", Name = "Reflector I" },
-                Plugboard = new Dictionary<char, char>
-                {
-                    {'A', 'B'},
-                    {'B', 'A'}
-                }
-            };
-        }
+        //[Fact]
+        //public void EnigmaMachine_GetSettings_ShouldReturnInitalState()
+        //{
+        //    //Arrange
+        //    ICipherMachine target = EnigmaConstants.GetEnigmaMachine(rotors: ["I", "II", "III"], reflector: "A", plugboard: null);
+
+
+        //}
+
+        //[Fact]
+        //public void EnigmaMachine_GetSettings_CanSerilaize()
+        //{
+
+        
+        //}
     }
 }

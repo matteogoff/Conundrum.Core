@@ -58,7 +58,11 @@ namespace Conundrum.Enigma
             return result;
         }
 
-        public ReflectorSetting GetSetting()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ReflectorSetting GetSettings()
         {
             // Create a new ReflectorSetting object and set its properties
             ReflectorSetting setting = new ReflectorSetting();

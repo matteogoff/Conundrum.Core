@@ -255,7 +255,7 @@ namespace Conundrum.Enigma.Test.Unit
             string message = "HELLO";
             string encodedMessage = "";
 
-            var startingSettings = originalRotor.GetRotorSetting();
+            var startingSettings = originalRotor.GetSettings();
             // Act
             foreach (char c in message)
             {
@@ -263,7 +263,7 @@ namespace Conundrum.Enigma.Test.Unit
                 originalRotor.Rotate();
             }
 
-            var savedSettings = originalRotor.GetRotorSetting();
+            var savedSettings = originalRotor.GetSettings();
             var newRotor = new Rotor(savedSettings);
 
             encodedMessage = "";
@@ -288,7 +288,7 @@ namespace Conundrum.Enigma.Test.Unit
             string message = "ICANSEE";
             string encodedMessage = "";
 
-            var startingSettings = originalRotor.GetRotorSetting();
+            var startingSettings = originalRotor.GetSettings();
             // Act
             foreach (char c in message)
             {
@@ -296,7 +296,7 @@ namespace Conundrum.Enigma.Test.Unit
                 originalRotor.Rotate();
             }
 
-            var savedSettings = originalRotor.GetRotorSetting();
+            var savedSettings = originalRotor.GetSettings();
             var newRotor = new Rotor(savedSettings);
 
             encodedMessage = "";

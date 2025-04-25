@@ -1,0 +1,53 @@
+{
+  "scenarios": [
+    {
+      "name": "Scenario 1",
+      "description": "This is the first scenario.",
+      "settings": {
+
+        "Rotors": [
+          {
+            "Name": "I",
+            "StartingPosition": "A",
+            "Position": 0,
+            "RingSetting": 0,
+            "Map": "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
+            "Notches": "D"
+          },
+          {
+            "Name": "II",
+            "StartingPosition": "A",
+            "Position": 0,
+            "RingSetting": 0,
+            "Map": "AJDKSIRUXBLHWTMCQGZNPYFVOE",
+            "Notches": "K"
+          },
+          {
+            "Name": "III",
+            "StartingPosition": "A",
+            "Position": 0,
+            "RingSetting": 0,
+            "Map": "BDFHJLCPRTXVZNYEIWGAKMUSQO",
+            "Notches": ""
+          }
+        ],
+        "Reflector": {
+          "Map": "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+          "Name": "Reflector I"
+        },
+        "Plugboard": [
+          {
+            "Key": "A",
+            "Value": "B"
+          }
+        ],
+        "Date": "",
+        "Type": "Enigma",
+        "Name": "Test",
+        "BypassCharacters": "",
+        "Summary": null
+      },
+      "message": "HELLO FROM HOME"
+    }
+  ]
+}

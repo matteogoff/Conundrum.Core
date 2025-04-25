@@ -59,7 +59,7 @@ namespace Conundrum.Enigma.Test.Unit
             var setting = new ReflectorSetting { Map = map, Name = name };
             var reflector = new Reflector(setting);
             // Act
-            var result = reflector.GetSetting();
+            var result = reflector.GetSettings();
             // Assert
             Assert.Equal(map, result.Map);
             Assert.Equal(name, result.Name);
@@ -101,7 +101,7 @@ namespace Conundrum.Enigma.Test.Unit
             ReflectorSetting setting = new ReflectorSetting { Map = map, Name = name };
             var reflector = new Reflector(setting);
             // Act
-            ReflectorSetting result = reflector.GetSetting();
+            ReflectorSetting result = reflector.GetSettings();
             // Assert
             Assert.NotNull(result);
             Assert.Equal(setting.Map, result.Map);

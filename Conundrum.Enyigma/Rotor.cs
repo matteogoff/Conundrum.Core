@@ -227,15 +227,18 @@ namespace Conundrum.Enigma
         }
 
 
-        //Add a method to return a RotorSetting object with the current state of the Rotor
-        public RotorSetting GetRotorSetting()
+        /// <summary>
+        /// Retrieves the current settings of the rotor.
+        /// </summary>
+        /// <returns>A <see cref="RotorSetting"/> object containing the rotor's configuration.</returns>
+        public RotorSetting GetSettings()
         {
             return new RotorSetting
             {
                 Name = this.name,
                 StartingPosition = this.startingPosition,
                 Position = this.position,
-                RingSetting = 0, // Assuming no ring setting for simplicity
+                RingSetting = 0, // Currently not implemented; defaults to 0.
                 Map = new string(this.rotorMap),
                 Notches = new string(this.notches)
             };

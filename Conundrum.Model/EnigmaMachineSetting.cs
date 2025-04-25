@@ -1,5 +1,7 @@
 namespace Conundrum.Model
 {
+
+    [Serializable]
     public class EnigmaMachineSetting : CipherSettingBase
     {
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Conundrum.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,12 @@ namespace Conundrum.Crypto
         /// Resets the cipher to the orginal starting point.
         /// </summary>
         void Reset();
+
+        /// <summary>
+        /// Gets the settings of the cipher machine.
+        /// </summary>
+        /// <returns>A Cipher</returns>
+        CipherSettingBase GetSettings();
 
 
     }

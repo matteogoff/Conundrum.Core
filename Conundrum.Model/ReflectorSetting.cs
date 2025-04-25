@@ -3,6 +3,7 @@
     /// <summary>
     /// Represents the settings for a reflector, including its mapping and name.
     /// </summary>
+    [Serializable]
     public class ReflectorSetting
     {
         /// <summary>

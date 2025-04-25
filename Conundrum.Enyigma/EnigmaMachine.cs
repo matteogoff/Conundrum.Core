@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Conundrum.Crypto;
+using Conundrum.Model;
 
 namespace Conundrum.Enigma
 {
@@ -11,6 +12,8 @@ namespace Conundrum.Enigma
     // Represents an Enigma machine, a cipher device used for encoding and decoding messages.
     public class EnigmaMachine : CipherBase, ICipherMachine
     {
+        private readonly string _name;
+
         // List of rotors used in the Enigma machine for encoding.
         private readonly List<Rotor> _rotors;
 
@@ -18,14 +21,62 @@ namespace Conundrum.Enigma
         private readonly Reflector _reflector;
 
         // Plugboard configuration for swapping characters before and after encoding.
-        private readonly Dictionary<char, char> _plugboard;
+        private readonly PlugBoard _plugboard;
 
         // Constructor to initialize the Enigma machine with rotors, reflector, and plugboard settings.
-        public EnigmaMachine(List<Rotor> rotors, Reflector reflector, Dictionary<char, char> plugboard)
+        public EnigmaMachine(List<Rotor> rotors, Reflector reflector, PlugBoard plugboard)
         {
+            if(rotors == null || rotors.Count == 0)
+            {
+                throw new ArgumentNullException(nameof(rotors));
+            }
+            else if (reflector == null)
+            {
+                throw new ArgumentNullException(nameof(reflector));
+            }
+
             _rotors = rotors;
             _reflector = reflector;
-            _plugboard = plugboard;
+
+            if (plugboard != null)
+            {
+                _plugboard = plugboard;
+            }
+            else
+            {
+                _plugboard = new PlugBoard();
+            }
+        }
+
+        public EnigmaMachine(EnigmaMachineSetting settings)
+        {
+            if(settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
+            else if(settings.Rotors == null || settings.Rotors.Count == 0)
+            {
+                throw new ArgumentNullException(nameof(settings.Rotors));
+            }
+            else if (settings.Reflector == null)
+            {
+                throw new ArgumentNullException(nameof(settings.Reflector));
+            }
+            else if (String.IsNullOrEmpty(settings.Type) || settings.Type != "Enigma")
+            {
+                throw new ArgumentNullException(nameof(settings.Type));
+            }
+
+            this._name = settings.Name;
+            this._rotors = new List<Rotor>();
+            foreach (var rotor in settings.Rotors)
+            {
+                this._rotors.Add(new Rotor(rotor));
+            }
+
+            this._reflector = new Reflector(settings.Reflector);
+
+            this._plugboard = new PlugBoard(settings.Plugboard);
         }
 
         // Encodes a single character using the Enigma machine's configuration.
@@ -43,7 +94,7 @@ namespace Conundrum.Enigma
             this.Rotate();
 
             // Pass the input character through the plugboard if configured.
-            char ch = _plugboard.ContainsKey(input) ? _plugboard[input] : input;
+            char ch = _plugboard.Map(input);
 
             // Forward pass through all rotors.
             foreach (var rotor in _rotors)
@@ -61,7 +112,7 @@ namespace Conundrum.Enigma
             }
 
             // Pass the output character through the plugboard if configured.
-            char result = _plugboard.ContainsKey(ch) ? _plugboard[ch] : ch;
+            char result = _plugboard.Map(ch);
 
             Debug.WriteLine($"EnigmaMachine completed encoding in {input} out {result}");
             return result;
@@ -93,6 +144,21 @@ namespace Conundrum.Enigma
                 rotor.Reset();
             }
         }
+
+
+        public CipherSettingBase GetSettings()
+        {
+            var settings = new EnigmaMachineSetting
+            {
+                Name = this._name,
+                Type = "Enigma",
+                Rotors = this._rotors.Select(r => r.GetSettings()).ToList(),
+                Reflector = this._reflector.GetSettings(),
+                Plugboard = this._plugboard.GetSettings() 
+            };
+            return settings;
+        }
+
     }
 
 }

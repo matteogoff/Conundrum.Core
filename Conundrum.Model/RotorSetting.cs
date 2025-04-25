@@ -3,6 +3,7 @@
     /// <summary>
     /// Represents the settings for a rotor in the Enigma machine.
     /// </summary>
+    [Serializable]
     public class RotorSetting
     {
         /// <summary>
@@ -13,7 +14,7 @@
         /// <summary>
         // The starting position of the rotor, represented as a character.
         /// </summary>
-        public char StartingPosition { get; set; }
+        public char StartingPosition { get; set; } = 'A';
 
         /// <summary>
         // The current position of the rotor, represented as an integer.
@@ -28,11 +29,11 @@
         /// <summary>
         // The character mapping of the rotor, defining its substitution logic.
         /// </summary>
-        public string Map { get; set; }
+        public string Map { get; set; } = String.Empty;
 
         /// <summary>
         // The notches on the rotor, indicating positions where turnover occurs.
         /// </summary>
-        public string Notches { get; set; }
+        public string Notches { get; set; } = String.Empty;
     }
 }

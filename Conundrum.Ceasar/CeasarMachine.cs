@@ -1,9 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Conundrum.Crypto;
+using Conundrum.Model;
 
 namespace Conundrum.Ceasar
 {
@@ -15,18 +15,17 @@ namespace Conundrum.Ceasar
         private char startingPosition;
         private readonly string name;
 
-        public CeasarMachine(string key, char startingPosition = 'A', string name = "Rotor") {
+        public CeasarMachine(string key, char startingPosition = 'A', string name = "Rotor")
+        {
             this.keyMap = key.ToCharArray();
             this.length = key.Length;
             this.position = startingPosition - 'A';
             this.name = name;
         }
 
-
         public char Encode(char input)
         {
-
-            if(this.ByPassCharacters.Contains(input))
+            if (this.ByPassCharacters.Contains(input))
             {
                 Debug.WriteLine($"Bypassing character {input}");
                 return input;
@@ -47,7 +46,7 @@ namespace Conundrum.Ceasar
         }
 
         /// <summary>
-        /// Rotates the position of the character in the key syrin
+        /// Rotates the position of the character in the key string
         /// </summary>
         public void Rotate()
         {
@@ -62,5 +61,21 @@ namespace Conundrum.Ceasar
             Debug.WriteLine("Resetting Enigma machine to default settings.");
             this.position = this.startingPosition - 'A';
         }
+
+        /// <summary>
+        /// Returns the settings of the cipher machine.
+        /// </summary>
+        public CipherSettingBase GetSettings()
+        {
+            // Assuming a basic implementation for demonstration purposes.
+            return new CeasarMachineSetting
+            {
+                Map = new string(this.keyMap),
+                StartingPosition = this.startingPosition,
+                Name = this.name
+            };
+        }
     }
+
+
 }
