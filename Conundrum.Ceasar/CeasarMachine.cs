@@ -23,6 +23,18 @@ namespace Conundrum.Ceasar
             this.name = name;
         }
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the current position of the cipher machine.
+        /// </summary>
+        public char Position
+        {
+            get => (char)(this.position + 'A');
+        }
+
+        #endregion Properties
+
         public char Encode(char input)
         {
             if (this.ByPassCharacters.Contains(input))
@@ -65,7 +77,7 @@ namespace Conundrum.Ceasar
         /// <summary>
         /// Returns the settings of the cipher machine.
         /// </summary>
-        public CipherSettingBase GetSettings()
+        public ICipherSetting GetSettings()
         {
             // Assuming a basic implementation for demonstration purposes.
             return new CeasarMachineSetting
@@ -74,6 +86,20 @@ namespace Conundrum.Ceasar
                 StartingPosition = this.startingPosition,
                 Name = this.name
             };
+        }
+        /// <summary>
+        /// Lists the current positions of the rotors.
+        /// </summary>
+        /// <returns>A list of characters where each entry is a Rotors current position.</returns>
+        public Dictionary<string, char> GetPositions()
+        {
+            Dictionary<string, char> result = new Dictionary<string, char>();
+
+            Debug.WriteLine($"Ceasar cipher is at position {this.Position}");
+            result.Add("Ceasar", this.Position);
+            
+
+            return result;
         }
     }
 

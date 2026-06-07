@@ -2,9 +2,8 @@ namespace Conundrum.Model
 {
 
     [Serializable]
-    public class EnigmaMachineSetting : CipherSettingBase
+    public class EnigmaMachineSetting : CipherSetting, IContainerCollection
     {
-
         // Simplified collection initialization (IDE0028)
         public List<RotorSetting> Rotors { get; set; } = new();
 
@@ -13,6 +12,10 @@ namespace Conundrum.Model
 
         // Simplified 'new' expression (IDE0090)
         public PlugBoardSetting Plugboard { get; set; } = new();
+
+
+        public List<char> BypassCharacters { get; set; } = new();
+
 
     }
 }

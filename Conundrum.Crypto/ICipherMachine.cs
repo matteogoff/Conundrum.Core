@@ -31,8 +31,14 @@ namespace Conundrum.Crypto
         /// <summary>
         /// Gets the settings of the cipher machine.
         /// </summary>
-        /// <returns>A Cipher</returns>
-        CipherSettingBase GetSettings();
+        /// <returns>A data model of the cipher machines current settings.</returns>
+        ICipherSetting GetSettings();
+
+        /// <summary>
+        /// Lists the current positions of the rotors by name.
+        /// </summary>
+        /// <returns>A list of name and the current position of each rotor.</returns>
+        Dictionary<string, char> GetPositions();
 
 
     }

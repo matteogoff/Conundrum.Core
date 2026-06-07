@@ -24,7 +24,7 @@ namespace Conundrum.Enigma
         private readonly PlugBoard _plugboard;
 
         // Constructor to initialize the Enigma machine with rotors, reflector, and plugboard settings.
-        public EnigmaMachine(List<Rotor> rotors, Reflector reflector, PlugBoard plugboard)
+        public EnigmaMachine(List<Rotor> rotors, Reflector reflector, PlugBoard plugboard, List<char> byPassCharacters = null)
         {
             if(rotors == null || rotors.Count == 0)
             {
@@ -45,6 +45,10 @@ namespace Conundrum.Enigma
             else
             {
                 _plugboard = new PlugBoard();
+            }
+            if (byPassCharacters != null)
+            {
+                this.ByPassCharacters.AddRange(byPassCharacters);
             }
         }
 
@@ -145,8 +149,11 @@ namespace Conundrum.Enigma
             }
         }
 
-
-        public CipherSettingBase GetSettings()
+        /// <summary>
+        /// Gets the settings of the cipher machine.
+        /// </summary>
+        /// <returns>A data model of the cipher machines current settings.</returns>
+        public ICipherSetting GetSettings()
         {
             var settings = new EnigmaMachineSetting
             {
@@ -157,6 +164,22 @@ namespace Conundrum.Enigma
                 Plugboard = this._plugboard.GetSettings() 
             };
             return settings;
+        }
+
+        /// <summary>
+        /// Lists the current positions of the rotors.
+        /// </summary>
+        /// <returns>A list of characters where each entry is a Rotors current position.</returns>
+        public Dictionary<string, char> GetPositions()
+        {
+            Dictionary<string, char> result = new Dictionary<string, char>();
+            foreach (var rotor in _rotors)
+            {
+                Debug.WriteLine($"Rotor {rotor.Name} is at position {rotor.Position}");
+                result.Add(rotor.Name, rotor.Position);
+            }
+
+            return result;
         }
 
     }
